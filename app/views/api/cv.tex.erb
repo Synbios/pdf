@@ -42,10 +42,10 @@
 \def\arraystretch{1}
 \begin{center}
 	\begin{tabularx}{0.95\textwidth}{L{11cm} R{7cm}}
-		\multirow{1}{11cm}{\Huge \textbf{<%= escaple_latex @data[:first_name] %> <%= escaple_latex @data[:last_name] %>}} & www.hloom.com \\
-		& Cell: <%= escaple_latex @data[:contact_number] %>\\
+		\multirow{1}{11cm}{\Huge \textbf{<%= @data[:first_name].to_latex if @data[:first_name].present? %> <%= @data[:last_name].to_latex if @data[:last_name].present? %>}} & www.hloom.com \\
+		& Cell: <%= @data[:contact_number].to_latex if @data[:contact_number].present? %>\\
 		& <%= @data[:address] %>\\
-		\textit{<%# text below name %>} & <%= escaple_latex @data[:linkedin_url] %>
+		\textit{<%# text below name %>} & LinkedIn <%#= @data[:linkedin_url].to_latex if @data[:linkedin_url].present? %>
 	\end{tabularx}
 \end{center}
 \egroup
@@ -55,7 +55,7 @@
 \def\arraystretch{1}
 \begin{center}
 	\begin{tabularx}{\textwidth}{C{0.2\textwidth} L{0.725\textwidth}}
-		\Large \textbf{Summary} & <%= escaple_latex @data[:summary] %> \\
+		\Large \textbf{Summary} & <%= @data[:summary].to_latex if @data[:summary].present? %> \\
 	\end{tabularx}
 \end{center}
 \egroup	
@@ -72,7 +72,7 @@
 	\begin{tabularx}{\textwidth}{C{0.2\textwidth} L{0.25\textwidth}  L{0.45\textwidth}}
 		\multirow{12}{*}{\Large \textbf{Work History}} & 
 		<% @data[:experiences].each do |experience| %>
-			\specialcell[t]{\textbf{<%= escaple_latex experience["job_title"] %>}\\<%= escaple_latex experience["duration"] %>\\<%= escaple_latex experience["company_name"] %>\\ \\ \\ \\}  & <%= escaple_latex experience["content"] %>\\
+			\specialcell[t]{\textbf{<%= experience["job_title"].to_latex if experience["job_title"].present? %>}\\<%= experience["duration"].to_latex if experience["duration"].present? %>\\<%= experience["company_name"].to_latex if experience["company_name"].present? %>\\ \\ \\ \\}  & <%= experience["content"].to_latex if experience["content"].present? %>\\
 			<% if experience != @data[:experiences].last %>
 				&&\\
 				&&\\
@@ -88,13 +88,14 @@
 	\line(1,0){400}
 	\vspace{0.5cm}
 \end{center}
+
 \bgroup
 \def\arraystretch{1}
 \begin{center}
 	\begin{tabularx}{\textwidth}{C{0.2\textwidth} L{0.25\textwidth}  L{0.45\textwidth}}
 		\multirow{2}{*}{\Large \textbf{Education}} & 
 		<% @data[:educations].each do |education| %>
-			\specialcell[t]{\textbf{<%= escaple_latex education["institution_name"] %>}\\<%= escaple_latex education["duration"] %>\\<%= escaple_latex education["degree"] %>\\\\\\\\\\}  & <%= escaple_latex education["content"] %> \\
+			\specialcell[t]{\textbf{<%= education["institution_name"].to_latex if education["institution_name"].present? %>}\\<%= education["duration"].to_latex if education["duration"].present? %>\\<%= education["degree"].to_latex if education["degree"].present? %>\\\\\\\\\\}  & <%= education["content"].to_latex if education["content"].present? %> \\
 			<% if education != @data[:educations].last %>
 				&&\\
 				&&\\

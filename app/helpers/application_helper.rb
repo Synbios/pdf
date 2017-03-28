@@ -4,7 +4,7 @@ module ApplicationHelper
     if str.blank?
       ""
     else
-      str.gsub(/([\&\#\_])/,"\\\\\\1")
+      str.gsub(/([\&\#\_\%\$\_\{\}\~\^\\])/,"\\\\\\1")
     end
   end
 end
