@@ -42,10 +42,10 @@
 \def\arraystretch{1}
 \begin{center}
 	\begin{tabularx}{0.95\textwidth}{L{11cm} R{7cm}}
-		\multirow{1}{11cm}{\Huge \textbf{<%= @data[:first_name].to_latex if @data[:first_name].present? %> <%= @data[:last_name].to_latex if @data[:last_name].present? %>}} & www.hloom.com \\
+		\multirow{1}{11cm}{\Huge \textbf{<%= @data[:first_name].to_latex if @data[:first_name].present? %> <%= @data[:last_name].to_latex if @data[:last_name].present? %>}} &  \\
 		& Cell: <%= @data[:contact_number].to_latex if @data[:contact_number].present? %>\\
-		& <%= @data[:address] %>\\
-		\textit{<%# text below name %>} & LinkedIn <%#= @data[:linkedin_url].to_latex if @data[:linkedin_url].present? %>
+		& <%= @data[:address].to_latex if @data[:address].present? %>\\
+		\textit{<%# text below name %>} & <%= @data[:linkedin_url].to_latex if @data[:linkedin_url].present? %>
 	\end{tabularx}
 \end{center}
 \egroup
