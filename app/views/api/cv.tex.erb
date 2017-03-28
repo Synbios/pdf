@@ -60,12 +60,13 @@
 \end{center}
 \egroup	
 
+
+<% if @data[:experiences].any? %>
 \begin{center}
 	\vspace{0.5cm}
 	\line(1,0){400}
 	\vspace{0.5cm}
 \end{center}
-
 \bgroup
 \def\arraystretch{1}
 \begin{center}
@@ -82,13 +83,16 @@
 		
 	\end{tabularx}
 \end{center}
-\egroup	
+\egroup
+
+
+<% if @data[:educations].any? %>
 \begin{center}
 	\vspace{0.5cm}
 	\line(1,0){400}
 	\vspace{0.5cm}
 \end{center}
-
+<% end %>
 \bgroup
 \def\arraystretch{1}
 \begin{center}
@@ -106,5 +110,6 @@
 		
 	\end{tabularx}
 \end{center}
-\egroup	
+\egroup
+<% end%>
 \end{document}
