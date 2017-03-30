@@ -112,4 +112,14 @@
 \end{center}
 \egroup
 <% end%>
+<% unless @data[:plus].blank? %>
+\bgroup
+\def\arraystretch{1}
+\begin{center}
+	\begin{tabularx}{\textwidth}{C{0.2\textwidth} L{0.725\textwidth}}
+		\Large \textbf{More Info} & <%= @data[:plus].to_latex if @data[:plus].present? %> \\
+	\end{tabularx}
+\end{center}
+\egroup	
+<% end %>
 \end{document}
