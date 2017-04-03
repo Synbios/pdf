@@ -102,9 +102,9 @@
 		\Large\textbf{Education} &
 		\begin{tabularx}{0.7\textwidth}{ l X }
 		<% @data[:educations].each do |education| %>
-			\noindent\parbox[t]{\hsize}{\specialcell{\textbf{<%= education["institution_name"].to_latex if education["institution_name"].present? %>}\\<%= education["duration"].to_latex if education["duration"].present? %>}}& <%= education["degree"].to_latex if education["degree"].present? %> \\ <%= education["content"].to_latex if education["content"].present? %>
+			\noindent\parbox[t]{\hsize}{\specialcell{\textbf{<%= education["institution_name"].to_latex if education["institution_name"].present? %>}\\<%= education["duration"].to_latex if education["duration"].present? %>}}& <%= education["degree"].to_latex if education["degree"].present? %> \\ <%= education["content"].to_latex if education["content"].present? %>\\
 			<% if education != @data[:educations].last %>
-			\\ & \\
+			& \\
 			<% end %>
 		<% end %>
 		\end{tabularx} & \\
@@ -112,5 +112,24 @@
 \end{center}
 \egroup
 
+<% end %>
+<% unless @data[:plus].blank? %>
+\begin{center}
+	\vspace{0.2cm}
+	\line(1,0){400}
+	\vspace{0.2cm}
+\end{center}
+
+\bgroup
+\def\arraystretch{1}
+\begin{center}	
+		\begin{tabular}%
+		{>{\centering\arraybackslash}C{0.2\textwidth}%
+			>{\arraybackslash}L{0.725\textwidth}%
+		}
+		\Large\textbf{Additional Information} & <%= @data[:plus].to_latex if @data[:plus].present? %>\\
+	\end{tabular}
+\end{center}
+\egroup
 <% end %>
 \end{document}
