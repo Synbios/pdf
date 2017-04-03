@@ -12,7 +12,6 @@
 \usepackage{color}
 \usepackage{tabularx}
 \usepackage{multirow}
-\usepackage{seqsplit}
 \newlength{\remaining}
 \setlength{\remaining}{6cm}
 
@@ -103,7 +102,7 @@
 		\Large\textbf{Education} &
 		\begin{tabularx}{0.7\textwidth}{ l X }
 		<% @data[:educations].each do |education| %>
-			\noindent\parbox[t]{\hsize}{\specialcell{\textbf{\seqsplit{<%= education["institution_name"].to_latex if education["institution_name"].present? %>}}\\<%= education["duration"].to_latex if education["duration"].present? %>}}& <%= education["degree"].to_latex if education["degree"].present? %> <%= education["content"].to_latex if education["content"].present? %>\\
+			\noindent\parbox[t]{\hsize}{\specialcell{\textbf{<%= reformat_wrapped(education["institution_name"].to_latex) if education["institution_name"].present? %>}\\<%= education["duration"].to_latex if education["duration"].present? %>}}& <%= education["degree"].to_latex if education["degree"].present? %> <%= education["content"].to_latex if education["content"].present? %>\\
 			<% if education != @data[:educations].last %>
 			& \\
 			<% end %>
