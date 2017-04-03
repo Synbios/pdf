@@ -75,7 +75,7 @@
 		\Large\textbf{Work History} &
 		\begin{tabularx}{0.7\textwidth}{ l X }
 			<% @data[:experiences].each do |experience| %>
-			\noindent\parbox[t]{\hsize}{\specialcell{\textbf{<%= bf(experience["job_title"].to_latex) if experience["job_title"].present? %>}\\<%= experience["duration"].to_latex if experience["duration"].present? %>}}& <%= experience["content"].to_latex if experience["content"].present? %>\\
+			\noindent\parbox[t]{\hsize}{\specialcell{<%= bf(experience["job_title"].to_latex) if experience["job_title"].present? %>\\<%= experience["duration"].to_latex if experience["duration"].present? %>}}& <%= experience["content"].to_latex if experience["content"].present? %>\\
 			<% if experience != @data[:experiences].last %>
 				& \\
 			<% end %>
