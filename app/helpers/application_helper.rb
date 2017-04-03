@@ -27,6 +27,6 @@ module ApplicationHelper
 
   def bf(str)
     strs = reformat_wrapped(str)
-    strs.map { |s| "\\textbf{#{s}}" }.join(" ")
+    strs.map { |s| "\\textbf{#{s}}" }.join("\\\\")
   end
 end
