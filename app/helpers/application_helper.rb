@@ -22,6 +22,6 @@ module ApplicationHelper
      end
      end
      lines << line if line
-    return lines.join '\\'
+    return lines.join "\\\\"
   end
 end
