@@ -6,7 +6,7 @@ class ApiController < ApplicationController
     if params[:data].blank?
       render text: "Sorry the data is corrupted, please try again."
     else
-      begin
+      #begin
         @data = JSON.parse Base64.decode64(params[:data])
         @data.symbolize_keys!
 
@@ -21,9 +21,9 @@ class ApiController < ApplicationController
         output_file_name = "./tmp/member_#{ @data[:user_id] }_cv.pdf"
         send_file output_file_name, type: "application/pdf", disposition: 'inline'  
 
-      rescue
-        render text: "Sorry there's an error processing the PDF file. Please try again."
-      end
+      #rescue
+      #  render text: "Sorry there's an error processing the PDF file. Please try again."
+      #end
       
     end
 
@@ -31,5 +31,21 @@ class ApiController < ApplicationController
   end
 
   private
+  def reformat_wrapped(s, width=16)
+    lines = []
+    line = ""
+    s.split(/\s+/).each do |word|
+      if line.size + word.size >= width
+        lines << line
+        line = word
+      elsif line.empty?
+       line = word
+      else
+       line << " " << word
+     end
+     end
+     lines << line if line
+    return lines.join '\\'
+  end
 
 end
