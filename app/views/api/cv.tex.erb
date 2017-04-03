@@ -12,17 +12,9 @@
 \usepackage{color}
 \usepackage{tabularx}
 \usepackage{multirow}
+\usepackage{lipsum}
 \newlength{\remaining}
 \setlength{\remaining}{6cm}
-
-%\usepackage{fourier} 
-%\usepackage{array}
-%\usepackage{makecell}
-%
-%\renewcommand\theadalign{vb}
-%\renewcommand\theadfont{\bfseries}
-%\renewcommand\theadgape{\Gape[4pt]}
-%\renewcommand\cellgape{\Gape[4pt]}
 
 \renewcommand{\familydefault}{\sfdefault} 
 
@@ -36,13 +28,15 @@
 
 \newcommand{\specialcell}[3][t]{\begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
 
+\usepackage{tabularx,booktabs} 
+
 \begin{document}
-	
+% Section 1 Top
 \bgroup
 \def\arraystretch{1}
 \begin{center}
 	\begin{tabularx}{0.95\textwidth}{L{11cm} R{7cm}}
-		\multirow{1}{11cm}{\Huge \textbf{<%= @data[:first_name].to_latex if @data[:first_name].present? %> <%= @data[:last_name].to_latex if @data[:last_name].present? %>}} &  \\
+		\multirow{1}{11cm}{\Huge \textbf{<%= @data[:first_name].to_latex if @data[:first_name].present? %> <%= @data[:last_name].to_latex if @data[:last_name].present? %>}} & <%= @data[:email].to_latex if @data[:email].present? %> \\
 		& Cell: <%= @data[:contact_number].to_latex if @data[:contact_number].present? %>\\
 		& <%= @data[:address].to_latex if @data[:address].present? %>\\
 		\textit{<%# text below name %>} & <%= @data[:linkedin_url].to_latex if @data[:linkedin_url].present? %>
@@ -51,75 +45,73 @@
 \egroup
 \hrulefill	
 \bigskip
+
 \bgroup
 \def\arraystretch{1}
-\begin{center}
-	\begin{tabularx}{\textwidth}{C{0.2\textwidth} L{0.725\textwidth}}
-		\Large \textbf{Summary} & <%= @data[:summary].to_latex if @data[:summary].present? %> \\
-	\end{tabularx}
+\begin{center}	
+		\begin{tabular}%
+		{>{\centering\arraybackslash}C{0.2\textwidth}%
+			>{\arraybackslash}L{0.725\textwidth}%
+		}
+		\Large\textbf{Summary} & <%= @data[:summary].to_latex if @data[:summary].present? %>\\
+	\end{tabular}
 \end{center}
-\egroup	
+\egroup
 
 
 <% if @data[:experiences].any? %>
 \begin{center}
-	\vspace{0.5cm}
+	\vspace{0.2cm}
 	\line(1,0){400}
-	\vspace{0.5cm}
+	\vspace{0.2cm}
 \end{center}
+
+
+
 \bgroup
 \def\arraystretch{1}
 \begin{center}
-	\begin{tabularx}{\textwidth}{C{0.2\textwidth} L{0.25\textwidth}  L{0.45\textwidth}}
-		\multirow{12}{*}{\Large \textbf{Work History}} & 
-		<% @data[:experiences].each do |experience| %>
-			\specialcell[t]{\textbf{<%= experience["job_title"].to_latex if experience["job_title"].present? %>}\\<%= experience["duration"].to_latex if experience["duration"].present? %>\\<%= experience["company_name"].to_latex if experience["company_name"].present? %>\\ \\ \\ \\}  & <%= experience["content"].to_latex if experience["content"].present? %>\\
+	\begin{tabular}%
+		{>{\centering\arraybackslash}C{0.2\textwidth}>{\arraybackslash}L{0.15\textwidth}>{\arraybackslash}L{0.5\textwidth}}
+		\Large\textbf{Work History} &
+		\begin{tabularx}{0.7\textwidth}{ l X }
+			<% @data[:experiences].each do |experience| %>
+			\noindent\parbox[t]{\hsize}{\specialcell{\textbf{<%= experience["job_title"].to_latex if experience["job_title"].present? %>}\\<%= experience["duration"].to_latex if experience["duration"].present? %>}}& <%= experience["content"].to_latex if experience["content"].present? %>\\
 			<% if experience != @data[:experiences].last %>
-				&&\\
-				&&\\
-				&
+				& \\
 			<% end %>
-		<% end %>
-		
-	\end{tabularx}
+			<% end %>
+		\end{tabularx} & \\
+	\end{tabular}
 \end{center}
 \egroup
+<% end %>
 
 
 <% if @data[:educations].any? %>
 \begin{center}
-	\vspace{0.5cm}
+	\vspace{0.2cm}
 	\line(1,0){400}
-	\vspace{0.5cm}
+	\vspace{0.2cm}
 \end{center}
-<% end %>
+
 \bgroup
 \def\arraystretch{1}
 \begin{center}
-	\begin{tabularx}{\textwidth}{C{0.2\textwidth} L{0.25\textwidth}  L{0.45\textwidth}}
-		\multirow{2}{*}{\Large \textbf{Education}} & 
+	\begin{tabular}%
+		{>{\centering\arraybackslash}C{0.2\textwidth}>{\arraybackslash}L{0.15\textwidth}>{\arraybackslash}L{0.5\textwidth}}
+		\Large\textbf{Education} &
+		\begin{tabularx}{0.7\textwidth}{ l X }
 		<% @data[:educations].each do |education| %>
-			\specialcell[t]{\textbf{<%= education["institution_name"].to_latex if education["institution_name"].present? %>}\\<%= education["duration"].to_latex if education["duration"].present? %>\\<%= education["degree"].to_latex if education["degree"].present? %>\\\\\\\\\\}  & <%= education["content"].to_latex if education["content"].present? %> \\
+			\noindent\parbox[t]{\hsize}{\specialcell{\textbf{<%= education["institution_name"].to_latex if education["institution_name"].present? %>}\\<%= education["duration"].to_latex if education["duration"].present? %>}}& <%= education["degree"].to_latex if education["degree"].present? %> \\ <%= education["content"].to_latex if education["content"].present? %>
 			<% if education != @data[:educations].last %>
-				&&\\
-				&&\\
-				&
+			\\ & \\
 			<% end %>
-			&
-		<% end%>
-		
-	\end{tabularx}
+		<% end %>
+		\end{tabularx} & \\
+	\end{tabular}
 \end{center}
 \egroup
-<% end%>
-<% unless @data[:plus].blank? %>
-\bgroup
-\def\arraystretch{1}
-\begin{center}
-	\begin{tabularx}{\textwidth}{C{0.2\textwidth} L{0.725\textwidth}}
-		\Large \textbf{More Info} & <%= @data[:plus].to_latex if @data[:plus].present? %> \\
-	\end{tabularx}
-\end{center}
-\egroup	
+
 <% end %>
 \end{document}
