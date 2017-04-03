@@ -1,6 +1,7 @@
 class ApiController < ApplicationController
   # before_action :set_itinerary, only: [:show, :calendar]
   protect_from_forgery with: :null_session
+  include ApplicationHelper
 
   def cv
     if params[:data].blank?
@@ -30,8 +31,7 @@ class ApiController < ApplicationController
     
   end
 
-  private
-  def reformat_wrapped(s, width=16)
+  def ApiController.reformat_wrapped(s, width=16)
     lines = []
     line = ""
     s.split(/\s+/).each do |word|
@@ -47,5 +47,6 @@ class ApiController < ApplicationController
      lines << line if line
     return lines.join '\\'
   end
+  
 
 end
