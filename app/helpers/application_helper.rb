@@ -22,6 +22,11 @@ module ApplicationHelper
      end
      end
      lines << line if line
-    return lines.join "\\\\"
+    lines
+  end
+
+  def bf(str)
+    strs = reformat_wrapped(str)
+    strs.map { |s| "\\textbf{#{s}}" }.join(" ")
   end
 end
