@@ -52,7 +52,7 @@
 		{>{\centering\arraybackslash}C{0.2\textwidth}%
 			>{\arraybackslash}L{0.725\textwidth}%
 		}
-		\Large\textbf{Summary} & <%= @data[:summary].to_latex.gsub(/[\n\r]/, ' \vspace｛0.5cm｝') if @data[:summary].present? %>\\
+		\Large\textbf{Summary} & <%= @data[:summary].to_latex.gsub(/[\n\r]/, ' \vspace{0.5cm}') if @data[:summary].present? %>\\
 	\end{tabular}
 \end{center}
 \egroup
@@ -75,7 +75,7 @@
 		\Large\textbf{Work History} &
 		\begin{tabularx}{0.7\textwidth}{ l X }
 			<% @data[:experiences].each do |experience| %>
-			\noindent\parbox[t]{\hsize}{\specialcell{<%= bf(experience["job_title"].to_latex) if experience["job_title"].present? %>\\<%= experience["duration"].to_latex if experience["duration"].present? %>}}& <%= experience["content"].to_latex.gsub(/[\n\r]/, ' \vspace｛0.5cm｝') if experience["content"].present? %>\\
+			\noindent\parbox[t]{\hsize}{\specialcell{<%= bf(experience["job_title"].to_latex) if experience["job_title"].present? %>\\<%= experience["duration"].to_latex if experience["duration"].present? %>}}& <%= experience["content"].to_latex.gsub(/[\n\r]/, ' \vspace{0.5cm}') if experience["content"].present? %>\\
 			<% if experience != @data[:experiences].last %>
 				& \\
 			<% end %>
@@ -102,7 +102,7 @@
 		\Large\textbf{Education} &
 		\begin{tabularx}{0.7\textwidth}{ l X }
 		<% @data[:educations].each do |education| %>
-			\noindent\parbox[t]{\hsize}{\specialcell{<%= bf(education["institution_name"].to_latex) if education["institution_name"].present? %>\\<%= education["duration"].to_latex if education["duration"].present? %>}}& <%= education["degree"].to_latex if education["degree"].present? %> <%= education["content"].to_latex.gsub(/[\n\r]/, ' \vspace｛0.5cm｝') if education["content"].present? %>\\
+			\noindent\parbox[t]{\hsize}{\specialcell{<%= bf(education["institution_name"].to_latex) if education["institution_name"].present? %>\\<%= education["duration"].to_latex if education["duration"].present? %>}}& <%= education["degree"].to_latex if education["degree"].present? %> <%= education["content"].to_latex.gsub(/[\n\r]/, ' \vspace{0.5cm}') if education["content"].present? %>\\
 			<% if education != @data[:educations].last %>
 			& \\
 			<% end %>
@@ -127,7 +127,7 @@
 		{>{\centering\arraybackslash}C{0.2\textwidth}%
 			>{\arraybackslash}L{0.725\textwidth}%
 		}
-		\Large\textbf{Additional Information} & <%= @data[:plus].to_latex.gsub(/[\n\r]/, ' \vspace｛0.5cm｝') if @data[:plus].present? %>\\
+		\Large\textbf{Additional Information} & <%= @data[:plus].to_latex.gsub(/[\n\r]/, ' \vspace{0.5cm}') if @data[:plus].present? %>\\
 	\end{tabular}
 \end{center}
 \egroup
