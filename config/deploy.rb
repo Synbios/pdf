@@ -4,7 +4,7 @@ lock "3.8.0"
 # Change these
 server 'ec2-34-205-196-188.compute-1.amazonaws.com', port: 22, roles: [:web, :app, :db], primary: true
 
-set :repo_url,        'git@github.com:Synbios/pdf.git'
+set :repo_url,        'git@github.com:thecodingbull/globalhelp_pdf.git'
 set :application,     'pdf'
 set :user,            'ec2-user'
 set :puma_threads,    [4, 16]

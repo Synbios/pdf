@@ -35,10 +35,10 @@
 \def\arraystretch{1}
 \begin{center}
 	\begin{tabularx}{0.95\textwidth}{L{11cm} R{7cm}}
-		\multirow{1}{11cm}{\Huge \textbf{<%= @data[:first_name].to_latex if @data[:first_name].present? %> <%= @data[:last_name].to_latex if @data[:last_name].present? %>}} & <%= @data[:email].to_latex if @data[:email].present? %> \\
-		& Cell: <%= @data[:contact_number].to_latex if @data[:contact_number].present? %>\\
-		& <%= @data[:address].to_latex if @data[:address].present? %>\\
-		\textit{<%# text below name %>} & <%= @data[:linkedin_url].to_latex if @data[:linkedin_url].present? %>
+		\multirow{1}{11cm}{\Huge \textbf{<%=raw @data[:first_name].to_latex if @data[:first_name].present? %> <%=raw @data[:last_name].to_latex if @data[:last_name].present? %>}} & <%=raw @data[:email].to_latex if @data[:email].present? %> \\
+		& Cell: <%=raw @data[:contact_number].to_latex if @data[:contact_number].present? %>\\
+		& <%=raw @data[:address].to_latex if @data[:address].present? %>\\
+		\textit{<%# text below name %>} & <%=raw @data[:linkedin_url].to_latex if @data[:linkedin_url].present? %>
 	\end{tabularx}
 \end{center}
 \egroup
@@ -52,7 +52,7 @@
 		{>{\centering\arraybackslash}C{0.2\textwidth}%
 			>{\arraybackslash}L{0.725\textwidth}%
 		}
-		\Large\textbf{Summary} & <%= @data[:summary].to_latex.gsub(/[\n\r]/, ' \hfill \break ') if @data[:summary].present? %>\\
+		\Large\textbf{Summary} & <%=raw @data[:summary].to_latex.gsub(/[\n\r]+/, ' \hfill \break ') if @data[:summary].present? %>\\
 	\end{tabular}
 \end{center}
 \egroup
@@ -75,7 +75,7 @@
 		\Large\textbf{Work History} &
 		\begin{tabularx}{0.7\textwidth}{ l X }
 			<% @data[:experiences].each do |experience| %>
-			\noindent\parbox[t]{\hsize}{\specialcell{<%= bf(experience["job_title"].to_latex) if experience["job_title"].present? %>\\<%= experience["duration"].to_latex if experience["duration"].present? %>}}& <%= experience["content"].to_latex.gsub(/[\n\r]/, ' \hfill \break ') if experience["content"].present? %>\\
+			\noindent\parbox[t]{\hsize}{\specialcell{<%=raw bf(experience["job_title"].to_latex) if experience["job_title"].present? %>\\<%=raw experience["duration"].to_latex if experience["duration"].present? %>}}& <%=raw experience["content"].to_latex.gsub(/[\n\r]+/, ' \hfill \break ') if experience["content"].present? %>\\
 			<% if experience != @data[:experiences].last %>
 				& \\
 			<% end %>
@@ -102,7 +102,7 @@
 		\Large\textbf{Education} &
 		\begin{tabularx}{0.7\textwidth}{ l X }
 		<% @data[:educations].each do |education| %>
-			\noindent\parbox[t]{\hsize}{\specialcell{<%= bf(education["institution_name"].to_latex) if education["institution_name"].present? %>\\<%= education["duration"].to_latex if education["duration"].present? %>}}& <%= education["degree"].to_latex if education["degree"].present? %> <%= education["content"].to_latex.gsub(/[\n\r]/, ' \hfill \break ') if education["content"].present? %>\\
+			\noindent\parbox[t]{\hsize}{\specialcell{<%=raw bf(education["institution_name"].to_latex) if education["institution_name"].present? %>\\<%=raw education["duration"].to_latex if education["duration"].present? %>}}& <%=raw education["degree"].to_latex if education["degree"].present? %> <%=raw education["content"].to_latex.gsub(/[\n\r]+/, ' \hfill \break ') if education["content"].present? %>\\
 			<% if education != @data[:educations].last %>
 			& \\
 			<% end %>
@@ -127,7 +127,7 @@
 		{>{\centering\arraybackslash}C{0.2\textwidth}%
 			>{\arraybackslash}L{0.725\textwidth}%
 		}
-		\Large\textbf{Additional Information} & <%= @data[:plus].to_latex.gsub(/[\n\r]/, ' \hfill \break ') if @data[:plus].present? %>\\
+		\Large\textbf{Additional Information} & <%=raw @data[:plus].to_latex.gsub(/[\n\r]+/, ' \hfill \break ') if @data[:plus].present? %>\\
 	\end{tabular}
 \end{center}
 \egroup
