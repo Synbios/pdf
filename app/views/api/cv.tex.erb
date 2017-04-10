@@ -1,33 +1,24 @@
 \documentclass{article}
 
 %--------------------------------------------
+% Paper Setting
+\usepackage[left=1cm,right=1cm,top=1.2cm,bottom=1.75cm,headheight=2pt,a4paper]{geometry}
 
-\usepackage[left=1cm,right=1cm,top=1.2cm,bottom=1.75cm,headheight=2pt,paperheight=30in,paperwidth=8.5in]{geometry}
+% Font
 \usepackage{helvet}
-
-\usepackage{fancyhdr}
-\usepackage{lastpage}
-\usepackage{amssymb}
-\usepackage{graphicx}
-\usepackage{color}
-\usepackage{tabularx}
-\usepackage{multirow}
-\newlength{\remaining}
-\setlength{\remaining}{6cm}
-
 \renewcommand{\familydefault}{\sfdefault} 
 
-\hoffset=0in
-\voffset=0in
+% Table Cell Setting
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{longtable}
+\newcommand{\specialcell}[3][t]{\begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
 
 \usepackage{array}
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
-\newcommand{\specialcell}[3][t]{\begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
-
-\usepackage{tabularx,booktabs} 
 
 \begin{document}
 % Section 1 Top
@@ -45,17 +36,19 @@
 \hrulefill
 \bigskip
 
+
+% Section 2 Summary
 \bgroup
 \def\arraystretch{1}
 \begin{center}	
-		\begin{tabular}%
-		{>{\centering\arraybackslash}C{0.2\textwidth}%
-			>{\arraybackslash}L{0.725\textwidth}%
-		}
-		\Large\textbf{Summary} & <%=raw @data[:summary].to_latex.gsub(/[\n\r]+/, ' \hfill \break ') if @data[:summary].present? %>\\
+	\begin{tabular}{>{\centering\arraybackslash}C{0.2\textwidth}>{\arraybackslash}L{0.75\textwidth}}
+		\begin{tabularx}{0.9\textwidth}{ L{0.17\textwidth} X }
+			\Large\textbf{Summary} &  <%=raw @data[:summary].to_latex.gsub(/[\n\r]+/, ' \hfill \break ') if @data[:summary].present? %>
+		\end{tabularx} &
 	\end{tabular}
 \end{center}
 \egroup
+
 
 
 <% if @data[:experiences].any? %>
@@ -70,18 +63,20 @@
 \bgroup
 \def\arraystretch{1}
 \begin{center}
-	\begin{tabular}%
-		{>{\centering\arraybackslash}C{0.17\textwidth}>{\arraybackslash}L{0.2\textwidth}>{\arraybackslash}L{0.5\textwidth}}
-		\Large\textbf{Work History} &
-		\begin{tabularx}{0.7\textwidth}{ l X }
-			<% @data[:experiences].each do |experience| %>
-			\noindent\parbox[t]{\hsize}{\specialcell{<%=raw bf(experience["job_title"].to_latex) if experience["job_title"].present? %>\\<%=raw experience["duration"].to_latex if experience["duration"].present? %>}}& <%=raw experience["content"].to_latex.gsub(/[\n\r]+/, ' \hfill \break ') if experience["content"].present? %>\\
-			<% if experience != @data[:experiences].last %>
-				& \\
+	\begin{longtable}%
+		{>{\arraybackslash}C{0.2\textwidth}>{\arraybackslash}L{0.2\textwidth}>{\arraybackslash}L{0.55\textwidth}}
+		<% @data[:experiences].each_with_index do |experience, i| %>
+			<% if i == 0 %>
+				\begin{tabularx}{0.9\textwidth}{L{0.17\textwidth} p{0.2\textwidth} X }
+					\Large\textbf{Work History} & \noindent\parbox[t]{\hsize}{\specialcell{<%=raw bf(experience["job_title"].to_latex) if experience["job_title"].present? %>\\<%=raw experience["duration"].to_latex if experience["duration"].present? %>}} & <%=raw experience["content"].to_latex.gsub(/[\n\r]+/, ' \hfill \break ') if experience["content"].present? %>\\
+				\end{tabularx} & \\ & & \\
+			<% else %>
+				\begin{tabularx}{0.9\textwidth}{L{0.17\textwidth} p{0.2\textwidth} X }
+					& \noindent\parbox[t]{\hsize}{\specialcell{<%=raw bf(experience["job_title"].to_latex) if experience["job_title"].present? %>\\\textbf{Assurance}\\\textbf{Assistant}\\<%=raw experience["duration"].to_latex if experience["duration"].present? %>}}& <%=raw experience["content"].to_latex.gsub(/[\n\r]+/, ' \hfill \break ') if experience["content"].present? %>\\
+				\end{tabularx} & \\ & & \\
 			<% end %>
-			<% end %>
-		\end{tabularx} & \\
-	\end{tabular}
+		<% end %>
+	\end{longtable}
 \end{center}
 \egroup
 <% end %>
@@ -97,22 +92,24 @@
 \bgroup
 \def\arraystretch{1}
 \begin{center}
-	\begin{tabular}%
-		{>{\centering\arraybackslash}C{0.17\textwidth}>{\arraybackslash}L{0.2\textwidth}>{\arraybackslash}L{0.5\textwidth}}
-		\Large\textbf{Education} &
-		\begin{tabularx}{0.7\textwidth}{ l X }
-		<% @data[:educations].each do |education| %>
-			\noindent\parbox[t]{\hsize}{\specialcell{<%=raw bf(education["institution_name"].to_latex) if education["institution_name"].present? %>\\<%=raw education["duration"].to_latex if education["duration"].present? %>}}& <%=raw education["degree"].to_latex if education["degree"].present? %> <%=raw education["content"].to_latex.gsub(/[\n\r]+/, ' \hfill \break ') if education["content"].present? %>\\
-			<% if education != @data[:educations].last %>
-			& \\
+	\begin{longtable}
+		{>{\arraybackslash}C{0.2\textwidth}>{\arraybackslash}L{0.2\textwidth}>{\arraybackslash}L{0.55\textwidth}}
+		<% @data[:educations].each_with_index do |education, i| %>
+			<% if i == 0 %>
+				\begin{tabularx}{0.9\textwidth}{L{0.17\textwidth} p{0.2\textwidth} X }
+					\Large\textbf{Education}& \noindent\parbox[t]{\hsize}{\specialcell{<%=raw bf(education["institution_name"].to_latex) if education["institution_name"].present? %>\\<%=raw education["duration"].to_latex if education["duration"].present? %>}}& <%=raw education["degree"].to_latex if education["degree"].present? %> <%=raw education["content"].to_latex.gsub(/[\n\r]+/, ' \hfill \break ') if education["content"].present? %>
+				\end{tabularx} & \\ & & \\
+			<% else %>
+				\begin{tabularx}{0.9\textwidth}{L{0.17\textwidth} p{0.2\textwidth} X }	
+					&\noindent\parbox[t]{\hsize}{\specialcell{<%=raw bf(education["institution_name"].to_latex) if education["institution_name"].present? %>\\<%=raw education["duration"].to_latex if education["duration"].present? %>}}& <%=raw education["degree"].to_latex if education["degree"].present? %> <%=raw education["content"].to_latex.gsub(/[\n\r]+/, ' \hfill \break ') if education["content"].present? %>
+				\end{tabularx} & \\ & & \\
 			<% end %>
 		<% end %>
-		\end{tabularx} & \\
-	\end{tabular}
+	\end{longtable}
 \end{center}
 \egroup
-
 <% end %>
+
 <% unless @data[:plus].blank? %>
 \begin{center}
 	\vspace{0.2cm}
@@ -123,11 +120,10 @@
 \bgroup
 \def\arraystretch{1}
 \begin{center}	
-		\begin{tabular}%
-		{>{\centering\arraybackslash}C{0.2\textwidth}%
-			>{\arraybackslash}L{0.725\textwidth}%
-		}
-		\Large\textbf{Additional Information} & <%=raw @data[:plus].to_latex.gsub(/[\n\r]+/, ' \hfill \break ') if @data[:plus].present? %>\\
+	\begin{tabular}{>{\centering\arraybackslash}C{0.2\textwidth}>{\arraybackslash}L{0.75\textwidth}}
+			\begin{tabularx}{0.9\textwidth}{ L{0.17\textwidth} X }
+			\multirow{1}{0.2\textwidth}{\Large\textbf{Additional Information}} &  <%=raw @data[:plus].to_latex.gsub(/[\n\r]+/, ' \hfill \break ') if @data[:plus].present? %>
+		\end{tabularx} &
 	\end{tabular}
 \end{center}
 \egroup

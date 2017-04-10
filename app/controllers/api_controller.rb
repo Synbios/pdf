@@ -7,7 +7,7 @@ class ApiController < ApplicationController
     if params[:data].blank?
       render text: "Sorry the data is corrupted, please try again."
     else
-      #begin
+      begin
         @data = JSON.parse Base64.decode64(params[:data])
         @data.symbolize_keys!
 
@@ -22,10 +22,10 @@ class ApiController < ApplicationController
         output_file_name = "./tmp/member_#{ @data[:user_id] }_cv.pdf"
         send_file output_file_name, type: "application/pdf", disposition: 'inline'  
 
-      # rescue
-      #   puts Base64.decode64(params[:data])
-      #   render plain: "Sorry there's an error processing the PDF file. Please try again."
-      # end
+      rescue
+        puts Base64.decode64(params[:data])
+        render plain: "Sorry there's an error processing the PDF file. Please try again."
+      end
       
     end
 
