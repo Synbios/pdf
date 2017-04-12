@@ -72,7 +72,7 @@
 				\end{tabularx} & \\ & & \\
 			<% else %>
 				\begin{tabularx}{0.9\textwidth}{L{0.17\textwidth} p{0.2\textwidth} X }
-					& \noindent\parbox[t]{\hsize}{\specialcell{<%=raw bf(experience["job_title"].to_latex) if experience["job_title"].present? %>\\\textbf{Assurance}\\\textbf{Assistant}\\<%=raw experience["duration"].to_latex if experience["duration"].present? %>}}& <%=raw experience["content"].to_latex.gsub(/[\n\r]+/, ' \hfill \break ') if experience["content"].present? %>\\
+					& \noindent\parbox[t]{\hsize}{\specialcell{<%=raw bf(experience["job_title"].to_latex) if experience["job_title"].present? %>\\<%=raw experience["duration"].to_latex if experience["duration"].present? %>}}& <%=raw experience["content"].to_latex.gsub(/[\n\r]+/, ' \hfill \break ') if experience["content"].present? %>\\
 				\end{tabularx} & \\ & & \\
 			<% end %>
 		<% end %>
